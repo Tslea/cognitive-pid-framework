@@ -1,0 +1,84 @@
+# Cognitive PID Framework Configuration
+
+# LLM Model Configuration
+models:
+  keeper:
+    provider: "deepseek"  # Using DeepSeek for cost-effectiveness
+    model_name: "deepseek-chat"
+    temperature: 0.7
+    max_tokens: 2000
+  
+  developer:
+    provider: "deepseek"
+    model_name: "deepseek-coder"  # Specialized for code generation
+    temperature: 0.5
+    max_tokens: 3000
+  
+  qa:
+    provider: "deepseek"
+    model_name: "deepseek-chat"
+    temperature: 0.3
+    max_tokens: 2500
+
+# PID Controller Parameters
+pid:
+  kp: 1.0          # Proportional gain
+  ki: 0.1          # Integral gain
+  kd: 0.05         # Derivative gain
+  setpoint: 0.85   # Target quality metric (0-1)
+  dt: 1.0          # Time step
+  
+  # Anti-windup
+  integral_min: -10.0
+  integral_max: 10.0
+  
+  # Control limits
+  control_min: -5.0
+  control_max: 5.0
+  
+  # Oscillation detection
+  oscillation_window: 5
+  oscillation_threshold: 0.15
+
+# Measurement Weights
+metrics:
+  weights:
+    similarity: 0.4      # Embedding similarity to setpoint
+    test_pass_rate: 0.3  # Test pass percentage
+    lint_score: 0.2      # Code quality (lint/flake8)
+    req_coverage: 0.1    # Requirements coverage
+  
+  thresholds:
+    min_test_pass_rate: 0.7
+    min_lint_score: 0.6
+    min_similarity: 0.5
+
+# Safety Guards
+safety:
+  max_iterations: 50
+  stagnation_threshold: 0.01  # Min improvement required
+  stagnation_window: 10       # Iterations without improvement (increased from 5)
+  max_budget_usd: 10.0        # API cost limit
+  human_review_threshold: 0.3  # PV below this triggers review
+  rollback_threshold: 0.5      # PV drop triggers rollback
+  
+  # Progressive QA quality thresholds (more tolerant early, strict later)
+  quality_progression_enabled: true
+  min_quality_score_initial: 2.5  # Iterations 1-5: accept basic setup
+  min_quality_score_mid: 4.5      # Iterations 6-15: require functionality
+  min_quality_score_final: 6.5    # Iterations 16+: require high quality
+  min_quality_score: 5.0          # Fallback if progression disabled
+
+# Orchestration
+orchestration:
+  checkpoint_frequency: 5  # Save checkpoint every N iterations
+  log_level: "INFO"       # DEBUG, INFO, WARNING, ERROR
+  language: "en"          # "en" or "it" for prompts
+  auto_merge: true        # Auto-merge if QA passes
+  qa_frequency: 1         # Run QA every N iterations
+
+# Repository
+repository:
+  base_path: "./workspace"
+  checkpoint_path: "./checkpoints"
+  log_path: "./logs"
