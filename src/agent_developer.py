@@ -37,19 +37,26 @@ Complexity: {task_complexity}
 4. Identify potential risks and edge cases
 5. Generate a unified diff/patch that can be applied
 
-⚠️ **CRITICAL REQUIREMENTS:**
-- Write COMPLETE, FUNCTIONAL code - NOT just stubs or placeholders
+⚠️ **CRITICAL REQUIREMENTS - CODE QUALITY STANDARDS:**
+- Write COMPLETE, FUNCTIONAL code - NOT just stubs, placeholders, or TODOs
 - Every file must contain FULL implementation with working logic
 - Include proper error handling, validation, and edge case management
-- Add comprehensive docstrings and inline comments
+- Add comprehensive docstrings (Google or NumPy style) and inline comments where needed
 - Minimum 50 lines of actual code for main implementation files
 - DO NOT create empty files or files with just "pass" statements
-- Every function/method must have a real implementation
-- Include type hints throughout the code
+- Every function/method must have a real implementation - NO placeholder code
+- Include type hints throughout the code (Python 3.8+ style)
+- Follow PEP 8 style guidelines
+- Use meaningful variable and function names
+- Write self-documenting code with clear logic flow
+- Include input validation and error messages
+- Handle edge cases and provide meaningful error messages
+- DO NOT write code that just raises NotImplementedError or contains "TODO" comments
+- Ensure code is production-ready, not experimental or incomplete
 
 **Output Format (JSON):**
 {{
-  "patch": "unified diff format patch",
+  "patch": "unified diff format patch OR complete file content",
   "files_modified": ["path/to/file1.py", "path/to/file2.py"],
   "files_created": ["path/to/new_file.py"],
   "risks": [
@@ -62,6 +69,18 @@ Complexity: {task_complexity}
   "implementation_notes": "Key decisions and rationale",
   "testing_suggestions": ["Suggestion 1", "Suggestion 2"]
 }}
+
+**IMPORTANT - Patch Format:**
+- For NEW files: Include COMPLETE file content in the patch (not just diff)
+- Use unified diff format: start with "--- /dev/null" and "+++ path/to/new_file.py"
+- Include ALL code lines with "+" prefix (added lines)
+- For existing files: Use proper unified diff with context lines
+- Ensure the patch contains the FULL implementation, not just snippets
+- Example for new file:
+  --- /dev/null
+  +++ path/to/new_file.py
+  @@ -0,0 +1,50 @@
+  +[complete file content here, each line prefixed with +]
 
 Generate the implementation as JSON:"""
 
@@ -88,19 +107,26 @@ Complessità: {task_complexity}
 4. Identificare potenziali rischi e casi limite
 5. Generare una patch in formato diff unificato che può essere applicata
 
-⚠️ **REQUISITI CRITICI:**
-- Scrivi codice COMPLETO e FUNZIONANTE - NON solo stub o placeholder
+⚠️ **REQUISITI CRITICI - STANDARD DI QUALITÀ DEL CODICE:**
+- Scrivi codice COMPLETO e FUNZIONANTE - NON solo stub, placeholder o TODO
 - Ogni file deve contenere implementazione COMPLETA con logica funzionante
 - Includi gestione errori, validazione e gestione casi limite
-- Aggiungi docstring complete e commenti inline
+- Aggiungi docstring complete (stile Google o NumPy) e commenti inline dove necessario
 - Minimo 50 righe di codice reale per file di implementazione principali
 - NON creare file vuoti o file con solo "pass"
-- Ogni funzione/metodo deve avere implementazione reale
-- Includi type hints in tutto il codice
+- Ogni funzione/metodo deve avere implementazione reale - NO codice placeholder
+- Includi type hints in tutto il codice (stile Python 3.8+)
+- Segui le linee guida PEP 8
+- Usa nomi di variabili e funzioni significativi
+- Scrivi codice auto-documentante con logica chiara
+- Includi validazione degli input e messaggi di errore
+- Gestisci casi limite e fornisci messaggi di errore significativi
+- NON scrivere codice che solleva solo NotImplementedError o contiene commenti "TODO"
+- Assicurati che il codice sia pronto per la produzione, non sperimentale o incompleto
 
 **Formato Output (JSON):**
 {{
-  "patch": "patch in formato unified diff",
+  "patch": "patch in formato unified diff O contenuto completo del file",
   "files_modified": ["percorso/file1.py", "percorso/file2.py"],
   "files_created": ["percorso/nuovo_file.py"],
   "risks": [
@@ -113,6 +139,18 @@ Complessità: {task_complexity}
   "implementation_notes": "Decisioni chiave e motivazioni",
   "testing_suggestions": ["Suggerimento 1", "Suggerimento 2"]
 }}
+
+**IMPORTANTE - Formato Patch:**
+- Per file NUOVI: Includi il CONTENUTO COMPLETO del file nella patch (non solo il diff)
+- Usa formato unified diff: inizia con "--- /dev/null" e "+++ percorso/nuovo_file.py"
+- Includi TUTTE le righe di codice con prefisso "+" (righe aggiunte)
+- Per file esistenti: Usa unified diff corretto con righe di contesto
+- Assicurati che la patch contenga l'implementazione COMPLETA, non solo frammenti
+- Esempio per file nuovo:
+  --- /dev/null
+  +++ percorso/nuovo_file.py
+  @@ -0,0 +1,50 @@
+  +[contenuto completo del file qui, ogni riga con prefisso +]
 
 Genera l'implementazione come JSON:"""
 

@@ -211,7 +211,8 @@ def _get_codebase_summary(codebase_path: str) -> str:
                 try:
                     with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
                         total_lines += sum(1 for _ in f)
-                except:
+                except (IOError, OSError, UnicodeDecodeError):
+                    # Skip files that can't be read
                     pass
         
         summary_parts = [f"Total files: {sum(file_counts.values())}", f"Total lines: {total_lines}"]

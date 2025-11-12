@@ -224,7 +224,8 @@ def count_lines_of_code(directory: str) -> int:
             try:
                 with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
                     total += sum(1 for _ in f)
-            except:
+            except (IOError, OSError, UnicodeDecodeError):
+                # Skip files that can't be read
                 pass
     
     return total

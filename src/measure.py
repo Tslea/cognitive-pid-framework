@@ -308,7 +308,8 @@ def _extract_codebase_text(codebase_path: str, max_chars: int = 10000) -> str:
                     
                     if total_chars >= max_chars:
                         break
-            except:
+            except (IOError, OSError, UnicodeDecodeError):
+                # Skip files that can't be read
                 continue
         
         if total_chars >= max_chars:
